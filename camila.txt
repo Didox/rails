@@ -1,1 +1,5 @@
+<<<<<<< HEAD
  mi  ais coisas um teste
+=======
+camila teste
+>>>>>>> a7f9d1ebf853bd298b3fba02a650261130e8951c
