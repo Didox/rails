@@ -1,2 +1,7 @@
 .DS_Store
+*.php.BACKUP.*.php
+*.php.BASE.*.php
+*.php.LOCAL.*.php
+*.php.REMOTE.*.php
+*.php.orig
 

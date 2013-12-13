@@ -1,0 +1,3 @@
+[submodule "business"]
+	path = business
+	url = git@github.com:Didox/Didox.Business.git
