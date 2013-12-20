@@ -1,40 +1,76 @@
 # -*- encoding : utf-8 -*-
 
 require 'debugger'
+require 'rspec'
 
-module Funcoes
-  def self.included(o)
-    o.extend(Staticos)
+
+=begin
+
+class Carro
+  def marca
+    "Fiat"
   end
-
-  module Staticos
-    def calcula_cep
-      "calculado cep"
-    end
-  end
-
-
-  def calcula_cpf
-    "calculado"
-  end
-
 end
+
+
+
+it "testa funcao marca" do
+  defined?(Carro.new.marca).should be_true
+end
+
+
+class Fiat < Carro
+  attr_accessor :modelo
+
+  def marca
+    "FIAT - #{super}"
+  end
+end
+
+
+class Fiat < Carro
+  attr_accessor :modelo
+  
+  alias_method :marca_original, :marca
+
+  def marca
+    "FIAT - #{marca_original}"
+  end
+end
+
+
+
+
+
+
+
+
+module Accessor 
+  def my_attr_accessor(name) 
+    ivar_name = "@#{name}" 
+    define_method(name) do 
+      instance_variable_get(ivar_name) 
+    end 
+
+    define_method("#{name}=") do |val| 
+      instance_variable_set(ivar_name, val) 
+    end 
+  end 
+end 
+ 
+class Example 
+  extend Accessor 
+  my_attr_accessor :camila 
+end 
+
+e = Example.new
+e.camila = "dd"
+e.camila
+
 
 
 module Aula
   class Klass
-
-    include Funcoes
-
-    CONSTANTE = "abril"
-
-    def metodo_instancia
-      "criar novo instancia #{CONSTANTE}"
-    end
-
-    def self.metodo_de_classe_ou_statico
-      "criar novo instancia #{CONSTANTE}"
-    end
 
     def method_missing(meth) 
       return attrs[meth.to_sym] if attrs.has_key?(meth.to_sym)
@@ -44,7 +80,10 @@ module Aula
     private
 
     def attrs 
-      {:key1 => "key1 value", :key2 => "key2 value"}
+      {
+        :key1 => "key1 value", 
+        :key2 => "key2 value"
+      }
     end
 
   end
@@ -52,15 +91,16 @@ end
 
 puts Aula::Klass.new.key1
 
-debugger
 
 x = ""
 
 
 
-
-
 =begin
+
+
+
+
 
 
 
@@ -83,66 +123,6 @@ class Singleton
   def self.statico_vanessa(param = "vanessa")
     "criar novo instancia #{param}"
   end
-end
-
-
-
-class Carro
-  attr_accessor :nome, :ano, :quantidade_de_portas, :cor
-
-  @volante = "de couro"
-
-  def marca
-    @volante = "xyx"
-    @volante
-  end
-
-  private
-
-  def metodo_privado
-    "privado"
-  end
-
-
-  protected
-
-  def metodo_protegido
-    "protegido"
-  end
-end
-
-
-class Fiat < Carro
-  attr_accessor :modelo
-
-  def marca
-    "FIAT - #{super}"
-  end
-
-  def venderdor
-    "Itavema"
-  end
-
-  def set_marca(valor)
-    @set_marca = "#{self.marca} - #{valor}"
-  end
-
-  def get_marca
-    @set_marca
-  end
-
-  private
-
-  def calcula_marca
-     "ssss"
-  end
-
-  public
-
-  def calcula_marca2
-    "ssss #{self.metodo_privado}"
-  end
-
 end
 
 
